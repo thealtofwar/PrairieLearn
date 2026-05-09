@@ -70,9 +70,10 @@ chmod 777 /grade/params/params.json
 # Disable Java management options to hinder student's ability to dump
 # the heap.
 DISABLE_JAVA_MANAGEMENT="-XX:+DisableAttachMechanism -Djavax.management.builder.initial=DISABLED"
+DISABLE_JNI="--illegal-native-access=deny"
 
 su - sbuser << EOF
-landlock_sandbox java $JDK_JAVA_OPTIONS -cp "$CLASSPATH" $DISABLE_JAVA_MANAGEMENT JUnitAutograder
+landlock_sandbox java $DISABLE_JNI $JDK_JAVA_OPTIONS -cp "$CLASSPATH" $DISABLE_JAVA_MANAGEMENT JUnitAutograder
 EOF
 
 if [ -f $RESULTS_TEMP_FILE ]; then
